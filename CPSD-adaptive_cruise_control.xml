@@ -1,0 +1,628 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="CPSD-adaptive_cruise_control" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="11.0.1">
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={-9, -9, 1938, 1038}, maximized=true}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1708, 908]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.3875665067507614">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{633.4811863899231, 335.47234090225436}">
+    </property>
+    <property name="currentSpeed" class="ptolemy.data.expr.Parameter" value="41.7414785610445">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{495.0, 25.0}">
+        </property>
+    </property>
+    <property name="safeDistance" class="ptolemy.data.expr.Parameter" value="0.3 * currentSpeed">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{290.0, 25.0}">
+        </property>
+    </property>
+    <property name="desiredSpeed" class="ptolemy.data.expr.Parameter" value="50">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{155.0, 25.0}">
+        </property>
+    </property>
+    <property name="enableBackwardTypeInference" class="ptolemy.data.expr.Parameter" value="false">
+    </property>
+    <property name="criticalDistance" class="ptolemy.data.expr.Parameter" value="0.10 * currentSpeed">
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+      <svg>
+        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
+      </svg>
+    </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{715.0, 25.0}">
+        </property>
+    </property>
+    <property name="DE Director" class="ptolemy.domains.de.kernel.DEDirector">
+        <property name="startTime" class="ptolemy.data.expr.Parameter" value="0.0">
+        </property>
+        <property name="stopTime" class="ptolemy.data.expr.Parameter" value="10.0">
+        </property>
+        <property name="stopWhenQueueIsEmpty" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="synchronizeToRealTime" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="enforceMicrostepSemantics" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{80.0, 45.0}">
+        </property>
+    </property>
+    <entity name="DistanceSensor" class="ptolemy.actor.lib.DiscreteClock">
+        <property name="stopTimeIsLocal" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="period" class="ptolemy.actor.parameters.PortParameter" value="11.0">
+        </property>
+        <property name="offsets" class="ptolemy.data.expr.Parameter" value="{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}">
+        </property>
+        <property name="values" class="ptolemy.data.expr.Parameter" value="{25.0, 15.0, 15.0, 10.0, 5.0, 4.0, 2.0, 1.0, 8.0, 14.0, 17.0}">
+        </property>
+        <property name="repeat" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <doc>Create a generalized clock signal</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{90.0, 215.0}">
+        </property>
+        <port name="output" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="ACCController" class="ptolemy.actor.TypedCompositeActor">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{330.0, 225.0}">
+        </property>
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={-9, -9, 1938, 1038}, maximized=true}">
+        </property>
+        <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1708, 908]">
+        </property>
+        <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.2601989934364635">
+        </property>
+        <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{625.7031250000002, 273.4179365429918}">
+        </property>
+        <property name="Continuous Director" class="ptolemy.domains.continuous.kernel.ContinuousDirector">
+            <property name="startTime" class="ptolemy.data.expr.Parameter" value="0.0">
+            </property>
+            <property name="stopTime" class="ptolemy.data.expr.Parameter" value="100.0">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{5.0, -55.0}">
+            </property>
+        </property>
+        <port name="distanceInput" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{-35.0, 100.0}">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="speedInput" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{-25.0, 165.0}">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="acceleration/deceleration" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{1175.0, 90.0}">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <entity name="SpeedError" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="desiredSpeed - speedInput">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{275.0, 165.0}">
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="speedInput" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+        </entity>
+        <entity name="DistancePID" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="-1.0 * distanceError">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{585.0, 10.0}">
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="distanceError" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+        </entity>
+        <entity name="SpeedPID" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="0.5 * speedError">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{580.0, 165.0}">
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="speedError" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+        </entity>
+        <entity name="ControlSelector" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="(distanceInput &lt; criticalDistance) ? &#10;  emergencyBraking&#10;  : (distanceInput &lt; safeDistance) ? &#10;    distancePID&#10;    : (distanceInput &lt; safeDistance + 10.0) ? &#10;      distancePID * (1.0 - (distanceInput - safeDistance)/10.0) + speedPID * (distanceInput - safeDistance)/10.0 &#10;      : speedPID">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{940.0, 90.0}">
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="distanceInput" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="distancePID" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="speedPID" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="emergencyBraking" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                </property>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+            </port>
+        </entity>
+        <entity name="DistanceError" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="safeDistance - distanceInput">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{280.0, 10.0}">
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+            <port name="distanceInput" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+                </property>
+            </port>
+        </entity>
+        <entity name="SafeDistanceExp" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;Safe: &quot; + safeDistance + &quot;\nCritical: &quot; + criticalDistance">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{260.0, 65.0}">
+            </property>
+            <port name="input" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+            </port>
+        </entity>
+        <entity name="SafeDistanceDisplay" class="ptolemy.actor.lib.gui.Display">
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={873, 433, 374, 259}, maximized=false}">
+            </property>
+            <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute" value="[347, 186]">
+            </property>
+            <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="true">
+            </property>
+            <property name="title" class="ptolemy.data.expr.StringParameter" value="Adaptive Safe Distance">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{500.0, 65.0}">
+            </property>
+        </entity>
+        <entity name="EmergencyBraking" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="(distanceInput &lt; criticalDistance) ? -0.6 * speedInput : 0.0">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+                <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{260.0, 110.0}">
+            </property>
+            <port name="distanceInput" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                </property>
+            </port>
+            <port name="speedInput" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+            </port>
+        </entity>
+        <relation name="relation15" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+            </property>
+            <vertex name="vertex1" value="{65.0, 100.0}">
+            </vertex>
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;distanceInput._location&quot;,x=-35.0,y=100.0}, tail={id=&quot;relation15.vertex1&quot;,x=65.0,y=100.0}, points={} },{ head={id=&quot;ControlSelector.distanceInput&quot;,x=940.0,y=90.0}, tail={id=&quot;relation15.vertex1&quot;,x=65.0,y=100.0}, points={690.0,70.0,690.0,-20.0,65.0,-20.0} },{ head={id=&quot;SafeDistanceExp.input&quot;,x=260.0,y=65.0}, tail={id=&quot;relation15.vertex1&quot;,x=65.0,y=100.0}, points={65.0,65.0} },{ head={id=&quot;DistanceError.distanceInput&quot;,x=280.0,y=10.0}, tail={id=&quot;relation15.vertex1&quot;,x=65.0,y=100.0}, points={65.0,10.0} },{ head={id=&quot;EmergencyBraking.distanceInput&quot;,x=260.0,y=110.0}, tail={id=&quot;relation15.vertex1&quot;,x=65.0,y=100.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+            </property>
+            <vertex name="vertex1" value="{1140.0, 90.0}">
+            </vertex>
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;acceleration/deceleration._location&quot;,x=1175.0,y=90.0}, tail={id=&quot;relation2.vertex1&quot;,x=1140.0,y=90.0}, points={} },{ head={id=&quot;ControlSelector.output&quot;,x=940.0,y=90.0}, tail={id=&quot;relation2.vertex1&quot;,x=1140.0,y=90.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;ControlSelector.distancePID&quot;,x=940.0,y=90.0}, tail={id=&quot;DistancePID.output&quot;,x=585.0,y=10.0}, points={675.0,80.0,675.0,10.0} } }">
+            </property>
+        </relation>
+        <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;ControlSelector.speedPID&quot;,x=940.0,y=90.0}, tail={id=&quot;SpeedPID.output&quot;,x=580.0,y=165.0}, points={675.0,100.0,675.0,165.0} } }">
+            </property>
+        </relation>
+        <relation name="relation" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;DistancePID.distanceError&quot;,x=585.0,y=10.0}, tail={id=&quot;DistanceError.output&quot;,x=280.0,y=10.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;SpeedPID.speedError&quot;,x=580.0,y=165.0}, tail={id=&quot;SpeedError.output&quot;,x=275.0,y=165.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;SafeDistanceDisplay.input&quot;,x=500.0,y=65.0}, tail={id=&quot;SafeDistanceExp.output&quot;,x=260.0,y=65.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation8" class="ptolemy.actor.TypedIORelation">
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;ControlSelector.emergencyBraking&quot;,x=940.0,y=90.0}, tail={id=&quot;EmergencyBraking.output&quot;,x=260.0,y=110.0}, points={} } }">
+            </property>
+        </relation>
+        <relation name="relation9" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+            </property>
+            <vertex name="vertex1" value="{65.0, 165.0}">
+            </vertex>
+            <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;EmergencyBraking.speedInput&quot;,x=260.0,y=110.0}, tail={id=&quot;relation9.vertex1&quot;,x=65.0,y=165.0}, points={65.0,120.0} },{ head={id=&quot;speedInput._location&quot;,x=-25.0,y=165.0}, tail={id=&quot;relation9.vertex1&quot;,x=65.0,y=165.0}, points={} },{ head={id=&quot;SpeedError.speedInput&quot;,x=275.0,y=165.0}, tail={id=&quot;relation9.vertex1&quot;,x=65.0,y=165.0}, points={} } }">
+            </property>
+        </relation>
+        <link port="distanceInput" relation="relation15"/>
+        <link port="speedInput" relation="relation9"/>
+        <link port="acceleration/deceleration" relation="relation2"/>
+        <link port="SpeedError.output" relation="relation6"/>
+        <link port="SpeedError.speedInput" relation="relation9"/>
+        <link port="DistancePID.output" relation="relation5"/>
+        <link port="DistancePID.distanceError" relation="relation"/>
+        <link port="SpeedPID.output" relation="relation4"/>
+        <link port="SpeedPID.speedError" relation="relation6"/>
+        <link port="ControlSelector.output" relation="relation2"/>
+        <link port="ControlSelector.distanceInput" relation="relation15"/>
+        <link port="ControlSelector.distancePID" relation="relation5"/>
+        <link port="ControlSelector.speedPID" relation="relation4"/>
+        <link port="ControlSelector.emergencyBraking" relation="relation8"/>
+        <link port="DistanceError.output" relation="relation"/>
+        <link port="DistanceError.distanceInput" relation="relation15"/>
+        <link port="SafeDistanceExp.output" relation="relation7"/>
+        <link port="SafeDistanceExp.input" relation="relation15"/>
+        <link port="SafeDistanceDisplay.input" relation="relation7"/>
+        <link port="EmergencyBraking.output" relation="relation8"/>
+        <link port="EmergencyBraking.distanceInput" relation="relation15"/>
+        <link port="EmergencyBraking.speedInput" relation="relation9"/>
+    </entity>
+    <entity name="PlotVelocity" class="ptolemy.actor.lib.gui.TimedPlotter">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={283, 436, 606, 457}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[588, 384]">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1190.0, 225.0}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>Speed Vehicle</title>
+<caption>red = velocity</caption>
+<caption>blue = acceleration / deceleration</caption>
+<xLabel>Time (sec)</xLabel>
+<yLabel>Speed (km/h)</yLabel>
+<xRange min="0.0" max="10.0"/>
+<yRange min="-17.337934369972967" max="48.09491919326028"/>
+<default marks="dots"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="PlotDistance" class="ptolemy.actor.lib.gui.TimedPlotter">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={1229, 442, 654, 476}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[636, 403]">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{280.0, 290.0}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>Distanza dal Veicolo Davanti</title>
+<xLabel>Time (sec)</xLabel>
+<yLabel>Distance (m)</yLabel>
+<xRange min="0.0" max="10.0"/>
+<yRange min="1.0" max="25.0"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="Limiter" class="ptolemy.actor.lib.Expression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="input &lt; 0.0 ? 0.0 : input &gt; 130.0 ? 130.0 : input">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+            <property name="displayHeight" class="ptolemy.data.expr.Parameter" value="10">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{800.0, 130.0}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="AddSubtract" class="ptolemy.actor.lib.AddSubtract">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{560.0, 130.0}">
+        </property>
+    </entity>
+    <entity name="SpeedSensor" class="ptolemy.actor.lib.DiscreteClock">
+        <property name="stopTime" class="ptolemy.data.expr.Parameter" value="Infinity">
+        </property>
+        <property name="stopTimeIsLocal" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="period" class="ptolemy.actor.parameters.PortParameter" value="1.0">
+        </property>
+        <property name="offsets" class="ptolemy.data.expr.Parameter" value="{0.0}">
+        </property>
+        <property name="values" class="ptolemy.data.expr.Parameter" value="{currentSpeed}">
+        </property>
+        <doc>Create a generalized clock signal</doc>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{105.0, 115.0}">
+        </property>
+        <property name="repeat" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <port name="output" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="SpeedDisplay" class="ptolemy.actor.lib.gui.Display">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={874, 681, 372, 263}, maximized=false}">
+        </property>
+        <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute" value="[354, 190]">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1185.0, 130.0}">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="SetVariable" class="ptolemy.actor.lib.SetVariable">
+        <property name="variableName" class="ptolemy.kernel.util.StringAttribute" value="currentSpeed">
+        </property>
+        <property name="delayed" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="variableName">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{1030.0, 130.0}">
+        </property>
+    </entity>
+    <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="vertex1" value="{210.0, 215.0}">
+        </vertex>
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;PlotDistance.input&quot;,x=280.0,y=290.0}, tail={id=&quot;relation4.vertex1&quot;,x=210.0,y=215.0}, points={210.0,290.0} },{ head={id=&quot;ACCController.distanceInput&quot;,x=330.0,y=225.0}, tail={id=&quot;relation4.vertex1&quot;,x=210.0,y=215.0}, points={} },{ head={id=&quot;DistanceSensor.output&quot;,x=90.0,y=215.0}, tail={id=&quot;relation4.vertex1&quot;,x=210.0,y=215.0}, points={} } }">
+        </property>
+    </relation>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="vertex1" value="{500.0, 225.0}">
+        </vertex>
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;ACCController.acceleration/deceleration&quot;,x=330.0,y=225.0}, tail={id=&quot;relation3.vertex1&quot;,x=500.0,y=225.0}, points={} },{ head={id=&quot;PlotVelocity.input&quot;,x=1190.0,y=225.0,index=2}, tail={id=&quot;relation3.vertex1&quot;,x=500.0,y=225.0}, points={} },{ head={id=&quot;AddSubtract.plus&quot;,x=560.0,y=130.0,index=2}, tail={id=&quot;relation3.vertex1&quot;,x=500.0,y=225.0}, points={500.0,120.0} } }">
+        </property>
+    </relation>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="vertex1" value="{225.0, 115.0}">
+        </vertex>
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;AddSubtract.plus&quot;,x=560.0,y=130.0,index=2}, tail={id=&quot;relation.vertex1&quot;,x=225.0,y=115.0}, points={} },{ head={id=&quot;ACCController.speedInput&quot;,x=330.0,y=225.0}, tail={id=&quot;relation.vertex1&quot;,x=225.0,y=115.0}, points={225.0,235.0} },{ head={id=&quot;SpeedSensor.output&quot;,x=105.0,y=115.0}, tail={id=&quot;relation.vertex1&quot;,x=225.0,y=115.0}, points={} } }">
+        </property>
+    </relation>
+    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="vertex1" value="{1135.0, 130.0}">
+        </vertex>
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;SpeedDisplay.input&quot;,x=1185.0,y=130.0}, tail={id=&quot;relation5.vertex1&quot;,x=1135.0,y=130.0}, points={} },{ head={id=&quot;PlotVelocity.input&quot;,x=1190.0,y=225.0,index=2}, tail={id=&quot;relation5.vertex1&quot;,x=1135.0,y=130.0}, points={1135.0,220.0} },{ head={id=&quot;SetVariable.output&quot;,x=1030.0,y=130.0}, tail={id=&quot;relation5.vertex1&quot;,x=1135.0,y=130.0}, points={} } }">
+        </property>
+    </relation>
+    <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;Limiter.output&quot;,x=800.0,y=130.0}, tail={id=&quot;SetVariable.input&quot;,x=1030.0,y=130.0}, points={} } }">
+        </property>
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+        <property name="_layoutHint" class="ptolemy.vergil.actor.LayoutHint" value="{ { head={id=&quot;Limiter.input&quot;,x=800.0,y=130.0}, tail={id=&quot;AddSubtract.output&quot;,x=560.0,y=130.0}, points={} } }">
+        </property>
+    </relation>
+    <link port="DistanceSensor.output" relation="relation4"/>
+    <link port="ACCController.distanceInput" relation="relation4"/>
+    <link port="ACCController.speedInput" relation="relation"/>
+    <link port="ACCController.acceleration/deceleration" relation="relation3"/>
+    <link port="PlotVelocity.input" relation="relation5"/>
+    <link port="PlotVelocity.input" relation="relation3"/>
+    <link port="PlotDistance.input" relation="relation4"/>
+    <link port="Limiter.output" relation="relation6"/>
+    <link port="Limiter.input" relation="relation2"/>
+    <link port="AddSubtract.plus" relation="relation"/>
+    <link port="AddSubtract.plus" relation="relation3"/>
+    <link port="AddSubtract.output" relation="relation2"/>
+    <link port="SpeedSensor.output" relation="relation"/>
+    <link port="SpeedDisplay.input" relation="relation5"/>
+    <link port="SetVariable.input" relation="relation6"/>
+    <link port="SetVariable.output" relation="relation5"/>
+</entity>
